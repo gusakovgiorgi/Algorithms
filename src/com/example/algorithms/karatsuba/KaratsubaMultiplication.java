@@ -15,7 +15,7 @@ public class KaratsubaMultiplication {
         int yLength = y.length();
         ArithmeticString a, b, c, d;
 
-        int n = xLength > yLength ? xLength : yLength;
+        int n = Math.max(xLength,yLength);
 
         // n should be even
         if (n % 2 != 0) {
@@ -35,7 +35,7 @@ public class KaratsubaMultiplication {
         ArithmeticString ad = multiply(a, d);
         ArithmeticString bc = multiply(b, c);
 
-
+        // 10^n * ac + 10^(n/2) * (ad + bc) + bd
         return ac.tenPowerOf(n).add(ad.add(bc).tenPowerOf(n / 2)).add(bd);
     }
 }

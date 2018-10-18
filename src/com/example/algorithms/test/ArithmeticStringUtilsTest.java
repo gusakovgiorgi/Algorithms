@@ -3,11 +3,10 @@ package com.example.algorithms.test;
 import com.example.algorithms.karatsuba.ArithmeticString;
 import com.example.algorithms.karatsuba.ArithmeticStringUtils;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
 
 public class ArithmeticStringUtilsTest {
 
@@ -17,8 +16,8 @@ public class ArithmeticStringUtilsTest {
         ArithmeticString expectedFirstHalf = new ArithmeticString("7");
         ArithmeticString expectedSecondHalf = new ArithmeticString("8345");
 
-        Assert.assertTrue(expectedFirstHalf.equals(ArithmeticStringUtils.getFirstHalfOf(arStr, 8)));
-        Assert.assertTrue(expectedSecondHalf.equals(ArithmeticStringUtils.getSecondHalfOf(arStr, 8)));
+        Assert.assertEquals(expectedFirstHalf, ArithmeticStringUtils.getFirstHalfOf(arStr, 8));
+        Assert.assertEquals(expectedSecondHalf, ArithmeticStringUtils.getSecondHalfOf(arStr, 8));
     }
 
     @Test
@@ -41,15 +40,15 @@ public class ArithmeticStringUtilsTest {
         ArithmeticString expected2 = new ArithmeticString("23430");
 
 
-        Assert.assertTrue(expected1.equals(arStr.tenPowerOf(3)));
-        Assert.assertTrue(expected2.equals(arStr.tenPowerOf(1)));
-        Assert.assertTrue(ArithmeticString.ZERO.equals(ArithmeticString.ZERO.tenPowerOf(3)));
+        Assert.assertEquals(expected1, arStr.tenPowerOf(3));
+        Assert.assertEquals(expected2, arStr.tenPowerOf(1));
+        Assert.assertEquals(ArithmeticString.ZERO, ArithmeticString.ZERO.tenPowerOf(3));
 
     }
 
     @Test
     public void add(){
-        Assert.assertTrue(ArithmeticString.ZERO.equals(ArithmeticString.ZERO.add(ArithmeticString.ZERO)));
+        Assert.assertEquals(ArithmeticString.ZERO, ArithmeticString.ZERO.add(ArithmeticString.ZERO));
         Random random;
         for (int seed = 0; seed<10; seed++) {
             random=new Random(seed);
@@ -62,7 +61,7 @@ public class ArithmeticStringUtilsTest {
                 ArithmeticString expected = new ArithmeticString(String.valueOf(result));
                 ArithmeticString tested = firstArStr.add(secondArStr);
 
-                Assert.assertTrue("for numbers "+first+" and "+second,expected.equals(tested));
+                Assert.assertEquals("for numbers " + first + " and " + second, expected, tested);
             }
         }
 //        ArithmeticString first = new ArithmeticString("100");
