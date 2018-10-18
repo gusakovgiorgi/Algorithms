@@ -1,0 +1,73 @@
+package com.example.algorithms.test;
+
+import com.example.algorithms.karatsuba.ArithmeticString;
+import com.example.algorithms.karatsuba.ArithmeticStringUtils;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
+import java.util.Random;
+
+import static org.junit.Assert.*;
+
+public class ArithmeticStringUtilsTest {
+
+    @Test
+    public void getHalves() {
+        ArithmeticString arStr = new ArithmeticString("78345");
+        ArithmeticString expectedFirstHalf = new ArithmeticString("7");
+        ArithmeticString expectedSecondHalf = new ArithmeticString("8345");
+
+        Assert.assertTrue(expectedFirstHalf.equals(ArithmeticStringUtils.getFirstHalfOf(arStr, 8)));
+        Assert.assertTrue(expectedSecondHalf.equals(ArithmeticStringUtils.getSecondHalfOf(arStr, 8)));
+    }
+
+    @Test
+    public void multiply() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                int expected = i * j;
+                ArithmeticString resutl = new ArithmeticString(String.valueOf(i))
+                        .multiplySingleArithmeticStrings(new ArithmeticString(String.valueOf(j)));
+                int tested = Integer.valueOf(resutl.toString());
+                Assert.assertEquals(expected,tested);
+            }
+        }
+    }
+
+    @Test
+    public void power(){
+        ArithmeticString arStr = new ArithmeticString("2343");
+        ArithmeticString expected1 = new ArithmeticString("2343000");
+        ArithmeticString expected2 = new ArithmeticString("23430");
+
+
+        Assert.assertTrue(expected1.equals(arStr.tenPowerOf(3)));
+        Assert.assertTrue(expected2.equals(arStr.tenPowerOf(1)));
+        Assert.assertTrue(ArithmeticString.ZERO.equals(ArithmeticString.ZERO.tenPowerOf(3)));
+
+    }
+
+    @Test
+    public void add(){
+        Assert.assertTrue(ArithmeticString.ZERO.equals(ArithmeticString.ZERO.add(ArithmeticString.ZERO)));
+        Random random;
+        for (int seed = 0; seed<10; seed++) {
+            random=new Random(seed);
+            for (int j = 0; j < 1000; j++) {
+                long first = Math.abs(random.nextInt());
+                ArithmeticString firstArStr=new ArithmeticString(String.valueOf(first));
+                long second = Math.abs(random.nextInt());
+                ArithmeticString secondArStr = new ArithmeticString(String.valueOf(second));
+                long result = first + second;
+                ArithmeticString expected = new ArithmeticString(String.valueOf(result));
+                ArithmeticString tested = firstArStr.add(secondArStr);
+
+                Assert.assertTrue("for numbers "+first+" and "+second,expected.equals(tested));
+            }
+        }
+//        ArithmeticString first = new ArithmeticString("100");
+//        ArithmeticString second = new ArithmeticString("-55");
+//        ArithmeticString expected = new ArithmeticString("45");
+//        Assert.assertTrue(expected.equals(first.add(second)));
+    }
+}
