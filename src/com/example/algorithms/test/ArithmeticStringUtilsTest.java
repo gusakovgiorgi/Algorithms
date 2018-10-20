@@ -47,15 +47,35 @@ public class ArithmeticStringUtilsTest {
     }
 
     @Test
+    public void subtract(){
+        Assert.assertEquals(ArithmeticString.ZERO, ArithmeticString.ZERO.subtract(ArithmeticString.ZERO));
+        Random random;
+        for (int seed = 0; seed<10; seed++) {
+            random=new Random(seed);
+            for (int j = 0; j < 1000; j++) {
+                long first = random.nextInt();
+                ArithmeticString firstArStr=new ArithmeticString(String.valueOf(first));
+                long second = random.nextInt();
+                ArithmeticString secondArStr = new ArithmeticString(String.valueOf(second));
+                long result = first - second;
+                ArithmeticString expected = new ArithmeticString(String.valueOf(result));
+                ArithmeticString tested = firstArStr.subtract(secondArStr);
+
+                Assert.assertEquals("for numbers " + first + " and " + second, expected, tested);
+            }
+        }
+    }
+
+    @Test
     public void add(){
         Assert.assertEquals(ArithmeticString.ZERO, ArithmeticString.ZERO.add(ArithmeticString.ZERO));
         Random random;
         for (int seed = 0; seed<10; seed++) {
             random=new Random(seed);
             for (int j = 0; j < 1000; j++) {
-                long first = Math.abs(random.nextInt());
+                long first = random.nextInt();
                 ArithmeticString firstArStr=new ArithmeticString(String.valueOf(first));
-                long second = Math.abs(random.nextInt());
+                long second = random.nextInt();
                 ArithmeticString secondArStr = new ArithmeticString(String.valueOf(second));
                 long result = first + second;
                 ArithmeticString expected = new ArithmeticString(String.valueOf(result));
