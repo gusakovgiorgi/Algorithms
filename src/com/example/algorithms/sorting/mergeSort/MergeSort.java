@@ -1,6 +1,4 @@
-package com.example.algorithms.sorting;
-
-import java.util.Arrays;
+package com.example.algorithms.sorting.mergeSort;
 
 public class MergeSort {
 
