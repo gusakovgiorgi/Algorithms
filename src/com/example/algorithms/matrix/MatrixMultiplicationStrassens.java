@@ -11,8 +11,8 @@ public class MatrixMultiplicationStrassens {
 
     private int[][] multiplyRecursive(int[][] a, int[][] b) {
         int n = a.length;
-        if (n == 1) {
-            return new int[][]{{a[0][0] * b[0][0]}};
+        if (n < 10) {
+            return new MatrixMultipticationNaive().multiply(a,b);
         }
 
         int quadrant = n / 2;
