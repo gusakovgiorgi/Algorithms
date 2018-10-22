@@ -11,8 +11,8 @@ public class MatrixMultiplicationStrassens {
 
     private int[][] multiplyRecursive(int[][] a, int[][] b) {
         int n = a.length;
-        if (n < 10) {
-            return new MatrixMultipticationNaive().multiply(a,b);
+        if (n == 1) {
+            return new int[][]{{a[0][0] * b[0][0]}};
         }
 
         int quadrant = n / 2;
@@ -38,7 +38,7 @@ public class MatrixMultiplicationStrassens {
 
     private int[][] combine(int length, int[][] p1, int[][] p2, int[][] p3, int[][] p4, int[][] p5, int[][] p6, int[][] p7) {
         int[][] result = new int[length][length];
-        int[][] upperLeft = add(subtract(add(p5, p4), p2),p6);
+        int[][] upperLeft = add(subtract(add(p5, p4), p2), p6);
         int[][] upperRight = add(p1, p2);
         int[][] bottomLeft = add(p3, p4);
         int[][] bottomRight = subtract(subtract(add(p1, p5), p3), p7);
@@ -46,24 +46,17 @@ public class MatrixMultiplicationStrassens {
         int quadrant = length / 2;
 
         for (int i = 0; i < quadrant; i++) {
-            for (int j = 0; j < quadrant; j++) {
-                result[i][j] = upperLeft[i][j];
-            }
+            System.arraycopy(upperLeft[i], 0, result[i], 0, quadrant);
         }
         for (int i = 0; i < quadrant; i++) {
-            for (int j = quadrant; j < length; j++) {
-                result[i][j] = upperRight[i][j-quadrant];
-            }
+            System.arraycopy(upperRight[i], 0, result[i], quadrant, quadrant);
         }
-        for (int i = quadrant; i < length; i++) {
-            for (int j = 0; j < quadrant; j++) {
-                result[i][j] = bottomLeft[i-quadrant][j];
-            }
+        for (int i = 0; i < quadrant; i++) {
+            System.arraycopy(bottomLeft[i], 0, result[i + quadrant], 0, quadrant);
         }
-        for (int i = quadrant; i < length; i++) {
-            for (int j = quadrant; j < length; j++) {
-                result[i][j] = bottomRight[i - quadrant][j - quadrant];
-            }
+
+        for (int i = 0; i < quadrant; i++) {
+            System.arraycopy(bottomRight[i], 0, result[i + quadrant], quadrant, quadrant);
         }
 
         return result;
@@ -94,23 +87,24 @@ public class MatrixMultiplicationStrassens {
     }
 
     private int[][] getUpperRightQuadrant(int[][] a, int quadrant) {
-        return getQuadrant(a,quadrant,0,quadrant);
+        return getQuadrant(a, quadrant, 0, quadrant);
     }
 
     private int[][] getBottomLeftQuadrant(int[][] a, int quadrant) {
-        return getQuadrant(a, quadrant,quadrant,0);
+        return getQuadrant(a, quadrant, quadrant, 0);
     }
 
     private int[][] getBottomRightQuadrant(int[][] a, int quadrant) {
-        return getQuadrant(a, quadrant,quadrant,quadrant);
+        return getQuadrant(a, quadrant, quadrant, quadrant);
     }
 
-    private int[][] getQuadrant(int[][] a, int length,int rowStart, int columnStart) {
+    private int[][] getQuadrant(int[][] a, int length, int rowStart, int columnStart) {
         int[][] result = new int[length][length];
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                result[i][j] = a[i+rowStart][j+columnStart];
-            }
+            System.arraycopy(a[i + rowStart], columnStart, result[i], 0, length);
+//            for (int j = 0; j < length; j++) {
+//                result[i][j] = a[i+rowStart][j+columnStart];
+//            }
         }
         return result;
     }

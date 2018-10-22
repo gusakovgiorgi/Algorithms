@@ -12,8 +12,8 @@ public class MatrixMultiplicationStrassensTest {
     @Test
     public void multyplyQuadraticMatrices() {
         Random random = new Random(100);
-        for (int i = 0; i < 10; i++) {
-            int size = (int) Math.pow(2,random.nextInt(11));
+        for (int i = 1; i <= 15; i++) {
+            int size = (int) Math.pow(2,i);
             int[][] x = new int[size][size];
             int[][] y = new int[size][size];
             for (int j = 0; j < size; j++) {
