@@ -1,12 +1,12 @@
 package com.example.algorithms.test;
 
-import com.example.algorithms.sorting.mergeSort.SplitInversions;
+import com.example.algorithms.sorting.mergeSort.SplitInversionsAlgorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Random;
 
-public class SplitInversionsTest {
+public class SplitInversionsAlgorithmTest {
 
     @Test
     public void inversionsCount() {
@@ -17,7 +17,7 @@ public class SplitInversionsTest {
             for (int j = 0; j < arr.length; j++){
                 arr[j] = random.nextInt();
             }
-            Assert.assertEquals(SplitInversions.inversionsCountNaive(arr),SplitInversions.inversionsCount(arr));
+            Assert.assertEquals(SplitInversionsAlgorithm.inversionsCountNaive(arr), SplitInversionsAlgorithm.inversionsCount(arr));
         }
     }
 }

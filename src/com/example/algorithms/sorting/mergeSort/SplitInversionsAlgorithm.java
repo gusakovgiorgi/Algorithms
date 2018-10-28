@@ -3,14 +3,14 @@ package com.example.algorithms.sorting.mergeSort;
 /**
  * Number of inversions O(n*log(n))
  */
-public class SplitInversions {
-    int inversionsCount = 0;
+public class SplitInversionsAlgorithm {
+    long inversionsCount = 0;
 
     /**
      * naive algorithm with O(n^2) running time
      */
-    public static int inversionsCountNaive(int[] arr) {
-        SplitInversions splitInversions = new SplitInversions();
+    public static long inversionsCountNaive(int[] arr) {
+        SplitInversionsAlgorithm splitInversions = new SplitInversionsAlgorithm();
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
                 if (arr[i] > arr[j]) {
@@ -21,15 +21,15 @@ public class SplitInversions {
         return splitInversions.inversionsCount;
     }
 
-    public static int inversionsCount(int[] arr) {
+    public static long inversionsCount(int[] arr) {
         if (arr == null) throw new NullPointerException("array is null");
         if (arr.length == 0 || arr.length == 1) return 0;
-        SplitInversions splitInversions = new SplitInversions();
+        SplitInversionsAlgorithm splitInversions = new SplitInversionsAlgorithm();
         splitInversions.sortAndCount(arr, 0, arr.length);
         return splitInversions.getInversionsCount();
     }
 
-    public int getInversionsCount() {
+    public long getInversionsCount() {
         return inversionsCount;
     }
 

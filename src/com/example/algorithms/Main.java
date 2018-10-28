@@ -1,43 +1,44 @@
 package com.example.algorithms;
 
-import com.example.algorithms.matrix.MatrixMultiplicationStrassens;
+import com.example.algorithms.sorting.mergeSort.SplitInversionsAlgorithm;
 
-import java.util.Formatter;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
 
+
     public static void main(String[] args) {
-        int[][] a = new int[][]{
-                {1, 2},
-                {3, 4}
-        };
-        int[][] b = new int[][]{
-                {5, 6},
-                {7, 8}
-        };
 
-//        MatrixMultipticationNaive matrixMultipticationNaive=new MatrixMultipticationNaive();
-//        matrixMultipticationNaive.multiply(a,b);
-//        System.out.println(matrixMultipticationNaive.getPrintableMatrix());
-
-
-        MatrixMultiplicationStrassens matrixMultiplicationStrassens = new MatrixMultiplicationStrassens();
-        int[][] result = matrixMultiplicationStrassens.multiply(a, b);
-
-        StringBuilder sb = new StringBuilder();
-        Formatter formatter = new Formatter(sb);
-        String format = "%-5d";
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[i].length; j++) {
-                formatter.format(format, result[i][j]);
+        String fileName = "/home/qvark/Desktop/_bcb5c6658381416d19b01bfc1d3993b5_IntegerArray.txt";
+        int[] arr = new int[100000];
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            for (int i = 0; i < 100000; i++) {
+                arr[i] = Integer.valueOf(reader.readLine());
             }
-            sb.append("\n");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println(sb);
+        System.out.println(SplitInversionsAlgorithm.inversionsCountNaive(arr));
 
-    }
 
-    public static double logb(double a, double b) {
-        return Math.log(b) / Math.log(a);
+//        Point[] points = new Point[]{new Point(2, 1), new Point(-2, 2), new Point(4, 4),
+//                new Point(-3, -1), new Point(0, 1),new Point(0,2)
+//        };
+//
+//        Point[] closestPairsNaive = new ClosestPairAlgorithm().findClosetPairNaive(points);
+//        System.out.println("[Naive] Closest pairs are : " + closestPairsNaive[0] + " and " + closestPairsNaive[1] +
+//                ". Distance = " +
+//                ClosestPairAlgorithm.getEuclideanDistance(closestPairsNaive[0], closestPairsNaive[1]));
+//
+//        Point[] closestPairs = new ClosestPairAlgorithm().findClosetPairQuick(points);
+//        System.out.println("[Quick] Closest pairs are : " + closestPairs[0] + " and " + closestPairs[1] +
+//                ". Distance = " +
+//                ClosestPairAlgorithm.getEuclideanDistance(closestPairs[0], closestPairs[1]));
     }
 }
