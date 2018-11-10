@@ -1,6 +1,6 @@
 package com.example.algorithms.closest_pair;
 
-import com.example.algorithms.sorting.mergeSort.MergeSortAlgorithm;
+import com.example.algorithms.sorting.mergesort.MergeSortAlgorithm;
 
 import java.util.Arrays;
 import java.util.Comparator;

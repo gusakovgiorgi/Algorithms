@@ -1,4 +1,4 @@
-package com.example.algorithms.sorting.mergeSort;
+package com.example.algorithms.sorting.mergesort;
 
 import java.lang.reflect.Array;
 import java.util.Comparator;

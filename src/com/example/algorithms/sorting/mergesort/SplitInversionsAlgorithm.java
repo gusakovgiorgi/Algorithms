@@ -1,4 +1,4 @@
-package com.example.algorithms.sorting.mergeSort;
+package com.example.algorithms.sorting.mergesort;
 
 /**
  * Number of inversions O(n*log(n))

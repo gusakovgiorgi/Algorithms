@@ -1,6 +1,6 @@
 package com.example.algorithms.test;
 
-import com.example.algorithms.sorting.mergeSort.SplitInversionsAlgorithm;
+import com.example.algorithms.sorting.mergesort.SplitInversionsAlgorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
