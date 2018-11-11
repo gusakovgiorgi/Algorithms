@@ -14,7 +14,8 @@ public class DeterministicSelection {
 
     private static int DSelect(int[] arr, int l, int r, int i) {
         int n = r - l + 1;
-        if (n == 1) return arr[l];
+        // sorts from start to end-1 index
+        if (n <= 5) return MergeSortAlgorithm.sort(arr, l, r + 1)[i - l];
         int[] cArr = breakByGroupAndGetMedians(arr, l, r);
         int pivot = DSelect(cArr, 0, cArr.length - 1, n / 10);
         int pivotIndexInPartitionedArray = partitioningAroundPivot(arr, l, r, pivot);
@@ -50,7 +51,7 @@ public class DeterministicSelection {
         swap(arr, l, pivotIndex);
         int i = l + 1;
         for (int j = l + 1; j <= r; j++) {
-            if (arr[j] < pivot) {
+            if (arr[j] <= pivot) {
                 swap(arr, j, i);
                 i++;
             }

@@ -32,7 +32,7 @@ public class RandomizedSelection {
         swap(arr, l, pivotIndex);
         int i = l + 1;
         for (int j = l + 1; j <= r; j++) {
-            if (arr[j] < pivot) {
+            if (arr[j] <= pivot) {
                 swap(arr, j, i);
                 i++;
             }

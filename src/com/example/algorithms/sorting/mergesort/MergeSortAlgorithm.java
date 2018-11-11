@@ -58,7 +58,15 @@ public class MergeSortAlgorithm {
         return mergedArr;
     }
 
-    private static int[] sort(int[] arr, int start, int end) {
+    /**
+     * sort array with bounds [start,end-1]
+     *
+     * @param arr   array to sort
+     * @param start staring index
+     * @param end   end index, not inclusive
+     * @return sorted peace of array
+     */
+    public static int[] sort(int[] arr, int start, int end) {
         // If we have one element return it
         int length = end - start;
         if (length == 1) {
