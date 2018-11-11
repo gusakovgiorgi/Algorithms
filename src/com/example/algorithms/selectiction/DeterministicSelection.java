@@ -3,7 +3,6 @@ package com.example.algorithms.selectiction;
 import com.example.algorithms.sorting.mergesort.MergeSortAlgorithm;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 public class DeterministicSelection {
 
@@ -15,9 +14,10 @@ public class DeterministicSelection {
 
     private static int DSelect(int[] arr, int l, int r, int i) {
         int n = r - l + 1;
-        if (n <= 1) return arr[l];
-        int pivotIndex = getPivotIndex(arr, l, r);
-        int pivotIndexInPartitionedArray = partitioningAroundPivot(arr, l, r, pivotIndex);
+        if (n == 1) return arr[l];
+        int[] cArr = breakByGroupAndGetMedians(arr, l, r);
+        int pivot = DSelect(cArr, 0, cArr.length - 1, n / 10);
+        int pivotIndexInPartitionedArray = partitioningAroundPivot(arr, l, r, pivot);
         if (pivotIndexInPartitionedArray == i) return arr[i];
         if (pivotIndexInPartitionedArray > i) {
             return DSelect(arr, l, pivotIndexInPartitionedArray - 1, i);
@@ -26,14 +26,27 @@ public class DeterministicSelection {
         }
     }
 
+    private static int[] breakByGroupAndGetMedians(int[] arr, int l, int r) {
+        int n = r - l + 1;
+        int groups = new BigDecimal(Math.ceil((double) n / CHOOSE_GROUPS_SIZE)).intValue();
+        int[] groupsArr = new int[groups];
+        for (int i = 0; i < groups; i++) {
+            int groupSize = (n - (i + 1) * CHOOSE_GROUPS_SIZE) >= 0 ? CHOOSE_GROUPS_SIZE : n % CHOOSE_GROUPS_SIZE;
+            int[] group = new int[groupSize];
+            System.arraycopy(arr, l + i * CHOOSE_GROUPS_SIZE, group, 0, groupSize);
+            groupsArr[i] = MergeSortAlgorithm.sort(group)[groupSize / 2];
+        }
+        return groupsArr;
+    }
+
 
     /**
      * partition around pivot
      *
      * @return pivot index in partitioned array
      */
-    private static int partitioningAroundPivot(int[] arr, int l, int r, int pivotIndex) {
-        int pivot = arr[pivotIndex];
+    private static int partitioningAroundPivot(int[] arr, int l, int r, int pivot) {
+        int pivotIndex = findPivotIndex(arr, l, r, pivot);
         swap(arr, l, pivotIndex);
         int i = l + 1;
         for (int j = l + 1; j <= r; j++) {
@@ -46,39 +59,13 @@ public class DeterministicSelection {
         return i - 1;
     }
 
-    private static int getPivotIndex(int[] arr, int l, int r) {
-        int median = getMedianOfMedians(arr, l, r);
+    private static int findPivotIndex(int[] arr, int l, int r, int pivot) {
         for (int i = l; i <= r; i++) {
-            if (median == arr[i]) {
+            if (arr[i] == pivot) {
                 return i;
             }
         }
-        throw new RuntimeException("This code shoudn't be reached");
-    }
-
-    private static int getMedianOfMedians(int[] arr, int l, int r) {
-        int n = r - l + 1;
-        // n can be [2,5], because if it is 1, that's mean that on previous call there was one group,
-        // but one group is base case
-        if (n <= CHOOSE_GROUPS_SIZE) {
-            int middleIndex = n % 2 == 0 ? n / 2 - 1 : n / 2;
-            return MergeSortAlgorithm.sort(Arrays.copyOfRange(arr, l, r + 1))[middleIndex];
-        }
-        int groups = new BigDecimal(Math.ceil((double) n / CHOOSE_GROUPS_SIZE)).intValue();
-        int[] groupsArr = new int[groups];
-        for (int i = 0; i < groups; i++) {
-            int groupSize = (n - (i + 1) * CHOOSE_GROUPS_SIZE) >= 0 ? CHOOSE_GROUPS_SIZE : n - i * CHOOSE_GROUPS_SIZE;
-            int[] group = new int[groupSize];
-            System.arraycopy(arr, l + i * CHOOSE_GROUPS_SIZE, group, 0, groupSize);
-            int middleIndex = groupSize % 2 == 0 ? groupSize / 2 - 1 : groupSize / 2;
-            if (middleIndex < 0) {
-                groupsArr[i] = group[0];
-            } else {
-                groupsArr[i] = MergeSortAlgorithm.sort(group)[middleIndex];
-            }
-        }
-
-        return getMedianOfMedians(groupsArr, 0, groupsArr.length - 1);
+        throw new RuntimeException("This line never should be reached");
     }
 
 
