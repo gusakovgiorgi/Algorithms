@@ -2,6 +2,7 @@ package com.example.algorithms;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
@@ -10,8 +11,8 @@ public class MyScanner {
     BufferedReader br;
     StringTokenizer st;
 
-    public MyScanner() {
-        br = new BufferedReader(new InputStreamReader(System.in));
+    public MyScanner(InputStream is) {
+        br = new BufferedReader(new InputStreamReader(is));
     }
 
     String next() {
