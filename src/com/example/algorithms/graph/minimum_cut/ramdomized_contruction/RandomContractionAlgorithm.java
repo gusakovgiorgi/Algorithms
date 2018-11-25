@@ -1,4 +1,4 @@
-package com.example.algorithms.minimum_cut.ramdomized_contruction;
+package com.example.algorithms.graph.minimum_cut.ramdomized_contruction;
 
 import java.util.Random;
 

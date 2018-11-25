@@ -1,7 +1,7 @@
 package com.example.algorithms.test;
 
-import com.example.algorithms.minimum_cut.ramdomized_contruction.MinCutGraph;
-import com.example.algorithms.minimum_cut.ramdomized_contruction.Vertex;
+import com.example.algorithms.graph.minimum_cut.ramdomized_contruction.MinCutGraph;
+import com.example.algorithms.graph.minimum_cut.ramdomized_contruction.Vertex;
 import org.junit.Assert;
 import org.junit.Test;
 
