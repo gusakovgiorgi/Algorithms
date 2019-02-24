@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class MinHeap<T> {
+public class MaxHeap<T> {
     private List<T> items = new ArrayList<>();
     private Comparator<T> comparator;
 
 
-    public MinHeap(Comparator<T> comparator) {
+    public MaxHeap(Comparator<T> comparator) {
         this.comparator = comparator;
     }
 
@@ -84,7 +84,7 @@ public class MinHeap<T> {
 
     private void heapifyUp() {
         int index = items.size() - 1;
-        while (hasParent(index) && comparator.compare(parent(index), items.get(index)) > 0) {
+        while (hasParent(index) && comparator.compare(parent(index), items.get(index)) < 0) {
             swap(getParentIndex(index), index);
             index = getParentIndex(index);
         }
@@ -94,10 +94,10 @@ public class MinHeap<T> {
         int index = 0;
         while (hasLeftChild(index)) {
             int smallerChildIndex = getLeftChildIndex(index);
-            if (hasRightChild(index) && comparator.compare(getRightChild(index), getLeftChild(index)) < 0) {
+            if (hasRightChild(index) && comparator.compare(getRightChild(index), getLeftChild(index)) > 0) {
                 smallerChildIndex = getRightChildIndex(index);
             }
-            if (comparator.compare(items.get(index), items.get(smallerChildIndex)) < 0) {
+            if (comparator.compare(items.get(index), items.get(smallerChildIndex)) > 0) {
                 break;
             } else {
                 swap(index, smallerChildIndex);

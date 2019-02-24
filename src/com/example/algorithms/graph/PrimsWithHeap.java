@@ -1,22 +1,19 @@
-package com.example.algorithms.graph.dijkstra;
+package com.example.algorithms.graph;
 
+import com.example.algorithms.graph.dijkstra.Edge;
+import com.example.algorithms.graph.dijkstra.UndirectedGraph;
 import com.example.datastructure.MinHeapForDijkstra;
 
 import java.util.Comparator;
 import java.util.Objects;
 
-public class DijkstraWithHeap {
+public class PrimsWithHeap {
 
-
-    public static int[] computePaths(UndirectedGraph graph, int startVertex) {
+    public static long computePaths(UndirectedGraph graph, int startVertex) {
         boolean[] x = new boolean[graph.getVerticesSize()];
-        int[] distances = new int[graph.getVerticesSize()];
+        long costsOfMSP = 0;
         MinHeapForDijkstra<VertexKey> heap = new MinHeapForDijkstra<>(Comparator.comparingInt(o -> o.vertexKey));
-        for (int i = 0; i < distances.length; i++) {
-            distances[i] = 1000000;
-        }
         x[startVertex] = true;
-        distances[startVertex] = 0;
         for (Edge edge : graph.getIncidentEdges(startVertex).getEdges()) {
             int vertexIndex = edge.getHead() != startVertex ? edge.getHead() : edge.getTail();
             maintainHeap(new VertexKey(vertexIndex, edge.getWeight()), heap);
@@ -26,16 +23,16 @@ public class DijkstraWithHeap {
             int w = currentVertexKey.vertexIndex;
 
             x[w] = true;
-            distances[w] = currentVertexKey.vertexKey;
+            costsOfMSP += currentVertexKey.vertexKey;
 
             for (Edge edge : graph.getIncidentEdges(w).getEdges()) {
                 int vIndex = edge.getHead() != w ? edge.getHead() : edge.getTail();
                 if (x[vIndex]) continue;
-                maintainHeap(new VertexKey(vIndex, distances[w] + edge.getWeight()), heap);
+                maintainHeap(new VertexKey(vIndex, edge.getWeight()), heap);
             }
         }
 
-        return distances;
+        return costsOfMSP;
     }
 
     private static void maintainHeap(VertexKey vertexKey, MinHeapForDijkstra<VertexKey> heap) {
@@ -48,11 +45,6 @@ public class DijkstraWithHeap {
         } else {
             heap.add(vertexKey);
         }
-    }
-
-    private static boolean isEligibleEdge(boolean[] x, Edge edge) {
-        return ((!x[edge.getHead()] && x[edge.getTail()])
-                || (x[edge.getHead()] && !x[edge.getTail()]));
     }
 
     static class VertexKey {

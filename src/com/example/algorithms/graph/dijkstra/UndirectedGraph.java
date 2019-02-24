@@ -59,9 +59,6 @@ public class UndirectedGraph {
         return vertices.get(index);
     }
 
-    public Edge getEdge(int index) {
-        return edges.get(index);
-    }
 
     public List<Edge> getEdges() {
         return new LinkedList<>(edges.keySet());
