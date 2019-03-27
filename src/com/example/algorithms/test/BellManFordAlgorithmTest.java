@@ -27,15 +27,17 @@ public class BellManFordAlgorithmTest {
 
     @Test
     public void computeShortestPath() {
-        String fileName = "/home/qvark/Desktop/test.txt";
+        String fileName = "/Users/giorgi/Desktop/test.txt";
         Graph graph = new Graph();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = reader.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line, " \t\n\r\f,");
-                int tail = Integer.parseInt(tokenizer.nextToken()) - 1;
-                int head = Integer.parseInt(tokenizer.nextToken()) - 1;
+//                int tail = Integer.parseInt(tokenizer.nextToken()) - 1;
+//                int head = Integer.parseInt(tokenizer.nextToken()) - 1;
+                int tail = Integer.parseInt(tokenizer.nextToken());
+                int head = Integer.parseInt(tokenizer.nextToken());
                 int weight = Integer.parseInt(tokenizer.nextToken());
                 graph.addEdge(new Edge(tail, head, weight));
             }
@@ -45,8 +47,14 @@ public class BellManFordAlgorithmTest {
             e.printStackTrace();
         }
 
+        // Add face vertex with zero's
+        int fakeVertex= graph.getVerticesSize();
+        for (int i=0;i<graph.getVerticesSize();i++){
+            graph.addEdge(new Edge(fakeVertex,i,0));
+        }
 
-        int[] distances = BellManFordAlgorithm.computeShortestPath(graph, 0);
+
+        int[] distances = BellManFordAlgorithm.computeShortestPath(graph, fakeVertex);
         System.out.println(Arrays.toString(distances));
     }
 }
