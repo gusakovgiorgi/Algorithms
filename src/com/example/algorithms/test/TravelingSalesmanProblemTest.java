@@ -10,9 +10,39 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class TravelingSalesmanProblemTest {
+/* test1.txt
+13
+        20833.3333 17100.0000
+        20900.0000 17066.6667
+        21600.0000 16500.0000
+        23700.0000 15933.3333
+        23616.6667 15866.6667
+        21600.0000 14966.6667
+        22583.3333 14300.0000
+        21600.0000 14150.0000
+        21300.0000 13016.6667
+        22183.3333 13133.3333
+        22683.3333 12716.6667
+        23883.3333 14533.3333
+        24166.6667 13250.0000*/
 
+    //test2.txt
+// 12
+//        26150.0000 10550.0000
+//        26283.3333 12766.6667
+//        26433.3333 13433.3333
+//        26550.0000 13850.0000
+//        26733.3333 11683.3333
+//        27026.1111 13051.9444
+//        27096.1111 13415.8333
+//        27153.6111 13203.3333
+//        27166.6667 9833.3333
+//        27233.3333 10450.0000
+//        26133.3333 14500.0000
+//        25149.1667 12365.8333
     @Test
     public void allChoicesOfS() {
+        //https://www.desmos.com/calculator/tm7gsmtmpv
         String fileName1 = "/home/qvark/Desktop/test1.txt";
         String fileName2 = "/home/qvark/Desktop/test2.txt";
         double[][] adjMatr1 = null;
@@ -76,6 +106,11 @@ public class TravelingSalesmanProblemTest {
         double distanceBetweenTwoGroups = Math.sqrt(Math.pow((fromFirst.x - fromSecond.x), 2) +
                 Math.pow((fromFirst.y - fromSecond.y), 2));
         System.out.println("distance between two groups is " + distanceBetweenTwoGroups);
+        fromFirst = points2[points2.length - 2];
+        fromSecond = points1[points1.length - 2];
+        double distanceBetweenTwoGroups2 = Math.sqrt(Math.pow((fromFirst.x - fromSecond.x), 2) +
+                Math.pow((fromFirst.y - fromSecond.y), 2));
+        System.out.println("distance between two groups is " + distanceBetweenTwoGroups2);
 
         AtomicReference<Double> firstGroupShortestDistance = new AtomicReference<>(0D);
         AtomicReference<Double> secondGroupShortestDistance = new AtomicReference<>(0D);
@@ -100,7 +135,7 @@ public class TravelingSalesmanProblemTest {
             first.join();
             second.join();
             System.out.println("shortest distance is " + (firstGroupShortestDistance.get() + secondGroupShortestDistance.get() +
-                    distanceBetweenTwoGroups));
+                    distanceBetweenTwoGroups + distanceBetweenTwoGroups2));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
