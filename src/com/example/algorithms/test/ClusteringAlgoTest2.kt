@@ -28,7 +28,7 @@ class ClusteringAlgoTest2 {
                 val tail = tokenizer.nextToken().toInt() - 1
                 val weight = tokenizer.nextToken().toInt()
 
-                edgesList.add(Edge(tail, head, weight))
+                edgesList.add(Edge(tail, head, weight.toDouble()))
                 line = reader.readLine()
             }
 

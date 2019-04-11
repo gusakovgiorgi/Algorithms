@@ -17,19 +17,16 @@ public class BellManFordAlgorithm {
         // Compute until n to detect negative cycle
         for (int i = 1; i < graph.getVerticesSize(); i++) {
             for (int v = 0; v < graph.getVerticesSize(); v++) {
-                A[currentIndex][v] = Math.min(A[previousIndex][v], getMinimumFromEdge(i, v, graph, A, previousIndex));
+                A[currentIndex][v] = Math.min(A[previousIndex][v], getMinimumFromEdge(v, graph, A, previousIndex));
             }
             int temp = previousIndex;
             previousIndex = currentIndex;
             currentIndex = temp;
 
-            if (canExitEarly(A)) {
-                if (i == graph.getVerticesSize() - 1) {
-                    throw new IllegalArgumentException("graph contains negative cycle");
-                } else {
-                    System.out.println("Exiting early. Job already has done!");
-                    break;
-                }
+            if (canExit(A)) {
+                break;
+            } else if (i == graph.getVerticesSize() - 1) {
+                throw new IllegalArgumentException("graph contains negative cycle");
             }
         }
 
@@ -38,7 +35,7 @@ public class BellManFordAlgorithm {
         return A[currentIndex];
     }
 
-    private static boolean canExitEarly(int[][] A) {
+    private static boolean canExit(int[][] A) {
         for (int i = 0; i < A[0].length; i++) {
             if (A[0][i] != A[1][i]) {
                 return false;
@@ -47,7 +44,7 @@ public class BellManFordAlgorithm {
         return true;
     }
 
-    private static int getMinimumFromEdge(int i, int v, Graph graph, int[][] A, int previousIndex) {
+    private static int getMinimumFromEdge(int v, Graph graph, int[][] A, int previousIndex) {
         int min = Integer.MAX_VALUE;
         for (int incomeEdgeIndex : graph.getIncidentEdges(v).getIncomeEdgesIndices()) {
             Edge incomeEdge = graph.getEdge(incomeEdgeIndex);

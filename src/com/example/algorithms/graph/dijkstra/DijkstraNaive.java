@@ -28,7 +28,7 @@ public class DijkstraNaive {
                         v = edge.getTail();
                         w = edge.getHead();
                     }
-                    int pathLength = distances[v] + edge.getWeight();
+                    int pathLength = distances[v] + (int) edge.getWeight();
                     if (pathLength < minimumPath) {
                         addedVertex = w;
                         minimumPath = pathLength;

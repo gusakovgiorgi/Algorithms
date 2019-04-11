@@ -16,7 +16,7 @@ public class PrimsWithHeap {
         x[startVertex] = true;
         for (Edge edge : graph.getIncidentEdges(startVertex).getEdges()) {
             int vertexIndex = edge.getHead() != startVertex ? edge.getHead() : edge.getTail();
-            maintainHeap(new VertexKey(vertexIndex, edge.getWeight()), heap);
+            maintainHeap(new VertexKey(vertexIndex, (int) edge.getWeight()), heap);
         }
         while (heap.size() > 0) {
             VertexKey currentVertexKey = heap.poll();
@@ -28,7 +28,7 @@ public class PrimsWithHeap {
             for (Edge edge : graph.getIncidentEdges(w).getEdges()) {
                 int vIndex = edge.getHead() != w ? edge.getHead() : edge.getTail();
                 if (x[vIndex]) continue;
-                maintainHeap(new VertexKey(vIndex, edge.getWeight()), heap);
+                maintainHeap(new VertexKey(vIndex, (int) edge.getWeight()), heap);
             }
         }
 

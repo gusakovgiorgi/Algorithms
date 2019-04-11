@@ -1,45 +1,47 @@
 package com.example.algorithms.graph.dijkstra;
 
+import com.example.algorithms.graph.kosaraju.Graph;
 import com.example.datastructure.MinHeapForDijkstra;
 
 import java.util.Comparator;
 import java.util.Objects;
 
-public class DijkstraWithHeap {
-
-
-    public static int[] computePaths(UndirectedGraph graph, int startVertex) {
+public class DijkstraWithDirectedGraph {
+    public static int[] computePaths(Graph graph, int startVertex) {
         boolean[] x = new boolean[graph.getVerticesSize()];
         int[] distances = new int[graph.getVerticesSize()];
-        MinHeapForDijkstra<VertexKey> heap = new MinHeapForDijkstra<>(Comparator.comparingInt(o -> o.vertexKey));
+        MinHeapForDijkstra<DijkstraWithHeap.VertexKey> heap = new MinHeapForDijkstra<>(Comparator.comparingInt(o -> o.vertexKey));
         for (int i = 0; i < distances.length; i++) {
-            distances[i] = 1000000;
+            distances[i] = Integer.MAX_VALUE;
         }
         x[startVertex] = true;
         distances[startVertex] = 0;
-        for (Edge edge : graph.getIncidentEdges(startVertex).getEdges()) {
+        for (int edgeIndex : graph.getIncidentEdges(startVertex).getOutcomeEdgesIndices()) {
+            com.example.algorithms.graph.kosaraju.Edge edge = graph.getEdge(edgeIndex);
             int vertexIndex = edge.getHead() != startVertex ? edge.getHead() : edge.getTail();
-            maintainHeap(new VertexKey(vertexIndex, (int) edge.getWeight()), heap);
+            maintainHeap(new DijkstraWithHeap.VertexKey(vertexIndex, edge.getWeight()), heap);
         }
         while (heap.size() > 0) {
-            VertexKey currentVertexKey = heap.poll();
+            DijkstraWithHeap.VertexKey currentVertexKey = heap.poll();
             int w = currentVertexKey.vertexIndex;
 
             x[w] = true;
             distances[w] = currentVertexKey.vertexKey;
 
-            for (Edge edge : graph.getIncidentEdges(w).getEdges()) {
+            for (int edgeIndex : graph.getIncidentEdges(w).getOutcomeEdgesIndices()) {
+                com.example.algorithms.graph.kosaraju.Edge edge = graph.getEdge(edgeIndex);
                 int vIndex = edge.getHead() != w ? edge.getHead() : edge.getTail();
                 if (x[vIndex]) continue;
-                maintainHeap(new VertexKey(vIndex, distances[w] + (int) edge.getWeight()), heap);
+                int vertexKey = distances[w] == Integer.MAX_VALUE ? Integer.MAX_VALUE : distances[w] + edge.getWeight();
+                maintainHeap(new DijkstraWithHeap.VertexKey(vIndex, vertexKey), heap);
             }
         }
 
         return distances;
     }
 
-    private static void maintainHeap(VertexKey vertexKey, MinHeapForDijkstra<VertexKey> heap) {
-        VertexKey containedVertexKey = heap.contains(vertexKey);
+    private static void maintainHeap(DijkstraWithHeap.VertexKey vertexKey, MinHeapForDijkstra<DijkstraWithHeap.VertexKey> heap) {
+        DijkstraWithHeap.VertexKey containedVertexKey = heap.contains(vertexKey);
         if (containedVertexKey != null) {
             if (vertexKey.vertexKey < containedVertexKey.vertexKey) {
                 heap.remove(containedVertexKey);
@@ -68,7 +70,7 @@ public class DijkstraWithHeap {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            VertexKey vertexKey = (VertexKey) o;
+            DijkstraWithHeap.VertexKey vertexKey = (DijkstraWithHeap.VertexKey) o;
             return vertexIndex == vertexKey.vertexIndex;
         }
 

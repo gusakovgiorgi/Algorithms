@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Edge {
     private int tail;
     private int head;
-    private int weight;
+    private double weight;
 
-    public Edge(int tail, int head, int weight) {
+    public Edge(int tail, int head, double weight) {
         this.tail = tail;
         this.head = head;
         this.weight = weight;
@@ -21,7 +21,7 @@ public class Edge {
         return head;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
